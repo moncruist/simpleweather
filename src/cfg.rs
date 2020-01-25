@@ -4,8 +4,8 @@ use std::ffi::OsString;
 use std::io;
 use std::fs;
 
+extern crate ini;
 use ini::Ini;
-use ini;
 
 const XDG_CONFIG_HOME_VAR: &str = "XDG_CONFIG_HOME";
 const DEFAULT_CONFIG_LOCATION: &str = ".config";
@@ -59,7 +59,8 @@ impl AppConfig {
 
         let parent = config_path.parent().unwrap();
 
-        fs::create_dir_all(parent);
+        // suppress warning of unused result
+        let _ = fs::create_dir_all(parent);
 
         let mut conf = Ini::new();
         conf.with_section(Some(APP_SECTION)).set(API_KEY_CONF, &self.api_key);

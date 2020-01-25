@@ -1,6 +1,7 @@
 use std::env;
 
 use simpleweather::cfg::{AppConfig, ConfigError};
+use simpleweather::openweather;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -43,6 +44,9 @@ fn get_weather(location: &str) {
         }
     };
 
+    let weather = openweather::get_city_current_weather(location, config.api_key());
+
+    println!("Current weather = {:?}", weather);
 }
 
 fn login(api_key: &str) {
