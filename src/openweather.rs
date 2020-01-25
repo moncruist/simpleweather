@@ -6,6 +6,8 @@ use serde::Deserialize;
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
+use crate::CityWeather;
+
 struct OpenWeatherRequest<'a> {
     city: String,
     api_key: &'a str,
@@ -86,30 +88,21 @@ struct CityWeatherResponse {
     snow: Option<SnowInternal>,
 }
 
-#[derive(Debug)]
-pub struct CityWeather {
-    name: String,
-    condition: String,
-    temp: f64,
-    temp_min: f64,
-    temp_max: f64,
-}
-
-impl CityWeather {
-    fn from(json_resp: &CityWeatherResponse) -> CityWeather {
-        let condition = if json_resp.weather.len() > 0 {
-            let weather = &json_resp.weather[0];
+impl CityWeatherResponse {
+    fn to_city_weather(&self) -> CityWeather {
+        let condition = if self.weather.len() > 0 {
+            let weather = &self.weather[0];
             weather.main.clone()
         } else {
             String::from("None")
         };
 
         CityWeather {
-            name: json_resp.name.clone(),
+            name: self.name.clone(),
             condition,
-            temp: kelvin_to_celcius(json_resp.main.temp),
-            temp_min: kelvin_to_celcius(json_resp.main.temp_min),
-            temp_max: kelvin_to_celcius(json_resp.main.temp_max),
+            temp: kelvin_to_celcius(self.main.temp),
+            temp_min: kelvin_to_celcius(self.main.temp_min),
+            temp_max: kelvin_to_celcius(self.main.temp_max),
         }
     }
 }
@@ -148,7 +141,7 @@ pub fn get_city_current_weather(
         Err(_) => return Err(OpenWeatherError::DeserializationError),
     };
 
-    Ok(CityWeather::from(&data))
+    Ok(data.to_city_weather())
 }
 
 fn kelvin_to_celcius(deg: f64) -> f64 {
