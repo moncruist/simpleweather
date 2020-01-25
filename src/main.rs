@@ -44,7 +44,7 @@ fn get_weather(location: &str) {
         }
     };
 
-    let weather = openweather::get_city_current_weather(location, config.api_key());
+    let weather = openweather::get_city_current_weather(location, config.api_key()).unwrap();
 
     println!("Current weather = {:?}", weather);
 }

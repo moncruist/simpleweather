@@ -100,12 +100,18 @@ impl CityWeatherResponse {
         CityWeather {
             name: self.name.clone(),
             condition,
-            temp: kelvin_to_celcius(self.main.temp),
-            temp_min: kelvin_to_celcius(self.main.temp_min),
-            temp_max: kelvin_to_celcius(self.main.temp_max),
+            temp: kelvin_to_celcius_i16(self.main.temp),
+            temp_min: kelvin_to_celcius_i16(self.main.temp_min),
+            temp_max: kelvin_to_celcius_i16(self.main.temp_max),
         }
     }
 }
+
+fn kelvin_to_celcius_i16(deg: f64) -> i16 {
+    let celcius = deg - 273.15;
+    celcius.round() as i16
+}
+
 
 #[derive(Debug)]
 pub enum OpenWeatherError {
@@ -142,8 +148,4 @@ pub fn get_city_current_weather(
     };
 
     Ok(data.to_city_weather())
-}
-
-fn kelvin_to_celcius(deg: f64) -> f64 {
-    deg - 273.15
 }

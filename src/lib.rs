@@ -5,7 +5,7 @@ pub mod openweather;
 pub struct CityWeather {
     name: String,
     condition: String,
-    temp: f64,
-    temp_min: f64,
-    temp_max: f64,
+    temp: i16,
+    temp_min: i16,
+    temp_max: i16,
 }
