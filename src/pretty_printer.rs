@@ -40,11 +40,6 @@ fn calc_column_width(column: &[&str]) -> usize {
     biggest
 }
 
-//fn calc_total_width(column_widths: &[usize]) -> usize {
-//    let sum: usize = column_widths.iter().sum();
-//    sum + column_widths.len() + 1
-//}
-
 fn calc_columns_number(columns: &[&[&str]]) -> usize {
     let mut num: usize = 0;
     for column in columns {
