@@ -13,3 +13,4 @@ lto = true
 rust-ini = "0.14"
 reqwest = {version = "0.10", features = ["blocking", "json"]}
 serde = {version = "1.0", features = ["derive"]}
+unicode-segmentation = "1.6.0"

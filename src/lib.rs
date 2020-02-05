@@ -1,5 +1,6 @@
 pub mod cfg;
 pub mod openweather;
+pub mod pretty_printer;
 
 #[derive(Debug)]
 pub struct CityWeather {

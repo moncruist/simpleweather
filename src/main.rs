@@ -2,6 +2,7 @@ use std::env;
 
 use simpleweather::cfg::{AppConfig, ConfigError};
 use simpleweather::openweather;
+use simpleweather::pretty_printer;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -46,7 +47,7 @@ fn get_weather(location: &str) {
 
     let weather = openweather::get_city_current_weather(location, config.api_key()).unwrap();
 
-    println!("Current weather = {:?}", weather);
+    pretty_printer::print_current_weather(&weather);
 }
 
 fn login(api_key: &str) {
